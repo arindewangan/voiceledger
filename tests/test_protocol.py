@@ -16,7 +16,7 @@ import sys
 import httpx
 import pytest
 
-TOKEN=<redacted>
+TOKEN = "test-token"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -51,7 +51,7 @@ def live_server(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("proto")
     port = _free_port()
     env = dict(os.environ,
-API_TOKEN=<redacted>
+                API_TOKEN="test-token",
                LEDGER_DB=str(tmp / "proto.db"),
                BEDROCK_MODEL_ID="",
                PORT=str(port),
