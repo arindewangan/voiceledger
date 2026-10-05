@@ -50,7 +50,9 @@ Set the token field to your `API_TOKEN` and press **Reconnect**.
 
 All tool outputs are short, speakable sentences — no markdown, no tables.
 
-## Run the tests
+## Protocol smoke test (curl)  ```bash TOKEN=your-token-here SID=$(curl -s -D - -o /tmp/init -X POST http://127.0.0.1:8000/mcp \   -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \   -H 'Accept: application/json, text/event-stream' \   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"curl","version":"1"}}}' \   | grep -i mcp-session-id | awk '{print $2}' | tr -d '
+') curl -s -X POST http://127.0.0.1:8000/mcp -H "Authorization: Bearer $TOKEN" \   -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \   -H "Mcp-Session-Id: $SID" \   -d '{"jsonrpc":"2.0","method":"notifications/initialized"}' -o /dev/null -w '%{http_code}
+' curl -s -X POST http://127.0.0.1:8000/mcp -H "Authorization: Bearer $TOKEN" \   -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \   -H "Mcp-Session-Id: $SID" \   -d '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' | grep -o '"name":"[^"]*"' curl -s -X POST http://127.0.0.1:8000/mcp -H "Authorization: Bearer $TOKEN" \   -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \   -H "Mcp-Session-Id: $SID" \   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"log_expense","arguments":{"amount":450,"note":"groceries"}}}' \   | grep -o 'data: .*' ```  ## Run the tests
 
 ```bash
 pytest -q
