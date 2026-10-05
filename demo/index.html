@@ -176,7 +176,7 @@ function addMsg(who, text) {
   chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
   return d;
 }
-function escapeHtml(s) { return s.replace(/[&<>']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function escapeHtml(s) { return s.replace(/[&<>"/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function sysMsg(t) { const d = document.createElement("div"); d.className = "msg sys"; d.textContent = t; chat.appendChild(d); chat.scrollTop = chat.scrollHeight; }
 function setSpeaking(on) { orb.classList.toggle("speaking", on); wave.classList.toggle("on", on); }
 
