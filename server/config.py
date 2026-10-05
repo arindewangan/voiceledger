@@ -15,7 +15,7 @@ class Config:
     """Runtime configuration loaded from the environment."""
 
     # Bearer <redacted> required on every /mcp request. Change in production.
-    api_token: <redacted>
+    api_token: str = field(default_factory=lambda: os.environ.get("API_TOKEN", "demo-token-change-me"))
     # SQLite database path.
     db_path: str = field(default_factory=lambda: os.environ.get("LEDGER_DB", "data/ledger.db"))
     # Amazon Bedrock settings (AWS Builder mini challenge). Optional:
